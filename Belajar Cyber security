@@ -1,0 +1,151 @@
+Day 1 belajar Hardening 
+A. Hardening 
+Terdiri dari 8 soal yang berfokus pada peningkatan keamanan Sistem Operasi, 
+Jaringan Komputer, dan Aplikasi, yaitu:
+
+a. Hardening Sistem Operasi (Beres)
+1. Nonaktifkan login root via SSH
+2. Ganti port default SSH ke 2202
+3. Aktifkan firewall dan hanya izinkan port:
+ - 2202 (SSH baru)
+ - 80 (HTTP)
+ - 443 (HTTPS)
+4. Nonaktifkan dan matikan layanan cups dan avahi-daemon (jika 
+ada)
+5. Buat user baru bernama adminlks dengan hak sudo tanpa 
+password
+6. Pasang dan aktifkan fail2ban untuk SSH
+7. Aktifkan auditd dan pastikan log audit berjalan
+
+b. Keamanan Komunikasi E-mail
+1. Install GnuPG (GPG):
+2. Pastikan sistem memiliki gpg versi terbaru.
+3. Buat sepasang key PGP:
+Nama: LKS SMK
+Email: lks@smkprovinsi.id
+Key type: RSA & RSA
+Ukuran kunci: 4096 bit
+Expiry: 0 (never expire)
+4. Ekspor public key Anda ke file public-lks.asc
+5. Buat file pesan pesan.txt berisi teks:
+Ini adalah pesan rahasia untuk panitia LKS.
+6. Enkripsi file tersebut menggunakan public key Anda sendiri. 
+Simpan hasilnya sebagai pesan.txt.gpg
+7. Buat digital signature terhadap file pesan.txt dan hasilkan file 
+pesan.txt.sig
+8. Verifikasi kembali signature yang telah Anda buat
+
+c. Keamanan Port dan Jaringan Server
+1. Pasang firewall dan konfigurasi rule hanya untuk:
+SSH (port 2202)
+HTTP (port 80)
+HTTPS (port 443)
+2. Semua port selain itu harus ditutup.
+3. Nonaktifkan ICMP/ping agar tidak bisa diping dari luar.
+4. Pasang dan aktifkan TCP Wrappers (hosts.deny dan hosts.allow)
+5. Tolak semua default dari ALL
+6. Hanya izinkan akses SSH dari 192.168.0.0/24
+7. Pasang dan jalankan psad atau portsentry
+8. Untuk mendeteksi port scan
+9. Simulasikan satu port scan menggunakan nmap (ke localhost)
+
+d. Analisa Intrusion Detection System (IDS) Snort
+1. Pasang Snort pada Ubuntu (versi terbaru).
+2. Buat aturan Snort sederhana untuk mendeteksi port scan pada 
+port 80 dan 22.
+3. Jalankan Snort dalam mode IDS pada interface jaringan utama 
+(eth0 atau ens33).
+4. Lakukan simulasi serangan port scan menggunakan nmap ke 
+localhost.
+5. Periksa log Snort dan identifikasi hasil deteksi port scan.
+6. Laporkan hasil serangan yang terdeteksi dan buat ringkasan 
+singkat (2-3 kalimat) pada file laporan-snort.txt.
+
+e. Keamanan MySQL pada XAMPP
+1. Pastikan XAMPP sudah terpasang dan MySQL berjalan.
+2. Nonaktifkan akses root MySQL dari host selain localhost.
+3. Buat user baru bernama lksuser dengan password yang kuat, 
+dan beri hak akses terbatas hanya pada database lksdb.
+4. Ubah password root MySQL ke password yang kompleks.
+5. Matikan user anonymous di MySQL.
+6. Nonaktifkan fitur remote login root MySQL (jika belum).
+7. Lakukan audit konfigurasi MySQL menggunakan perintah 
+mysql_secure_installation.
+8. Cek apakah port MySQL (3306) hanya terbuka untuk localhost 
+menggunakan firewall.
+9. Buat laporan singkat tentang langkah-langkah hardening yang 
+sudah dilakukan.
+
+f. Keamanan Akun Ubuntu
+
+1. Tampilkan daftar user aktif di sistem (bukan user sistem).
+2. Periksa apakah ada user yang tidak memiliki password atau 
+menggunakan password kosong.
+3. Cek policy password minimum (umur password, panjang, 
+kompleksitas) menggunakan chage dan pam config.
+4. Aktifkan 2 User yang sudah disediakan untuk diamankan, 2 user 
+dinonaktifkan
+5. Pasang dan konfigurasi faillock untuk memblokir login setelah 5 
+kali gagal percobaan selama 10 menit.
+6. Aktifkan autentikasi dua faktor (2FA) untuk user tertentu (misal 
+adminlks).
+7. Buat laporan singkat (maksimal 1 paragraf) tentang hasil analisis 
+dan langkah perbaikan yang sudah dilakukan.
+
+g. Keamanan Koneksi OpenVPN Server
+
+1. Install OpenVPN dan Easy-RSA pada Ubuntu server.
+2. Buat Public Key Infrastructure (PKI) untuk OpenVPN 
+menggunakan Easy-RSA:
+3. Generate CA (Certificate Authority)
+4. Generate server certificate & key
+5. Generate client certificate & key
+6. Generate Diffie-Hellman parameters
+7. Konfigurasi OpenVPN server:
+8. Gunakan protokol UDP port 1194
+9. Konfigurasi routing agar client bisa akses jaringan lokal 
+10.8.0.0/24
+10. Aktifkan IP forwarding di kernel
+11. Buat file konfigurasi client .ovpn yang dapat dipakai untuk 
+koneksi.
+12. Jalankan OpenVPN server dan tes koneksi client dengan 
+konfigurasi yang sudah dibuat.
+13. Pastikan koneksi client terhubung dan IP client dapat akses 
+jaringan lokal secara aman.
+Gambar Topologi VPN Server
+
+h. Analisis Forensik Ubuntu OS
+
+1. Cari dan tampilkan log login terakhir menggunakan last dan 
+lastb.
+2. Analisa file log auth.log di /var/log untuk aktivitas login yang 
+mencurigakan (misal: percobaan login gagal berulang).
+3. Cari file-file yang diubah atau dibuat dalam 24 jam terakhir di 
+file anda.
+4. Periksa proses berjalan yang tidak biasa atau mencurigakan (ps 
+aux + grep).
+5. Cari file yang memiliki permission tidak biasa (misal: file skrip 
+yang bisa dijalankan oleh semua orang).
+6. Buat laporan singkat (maks 1 paragraf) berisi ringkasan hasil 
+analisis dan rekomendasi tindakan keamanan.
+jelaskan kisi kisi lomba lks yang saya berikan ini dengan detail namun mudah untuk di pahami
+
+2. Capture the Flag
+
+Terdiri dari 7 soal yang berfokus pada pencarian pesan rahasia dari
+teknologi keamanan siber, yaitu:
+a. Steganografi
+Peserta akan mencari FLAG di dalam sebuah file untuk dapat 
+ditemukan/dipecahkan. File bisa berupa apa saja (Gambar, Text,
+Audio, dst.)
+b. Cryptography
+Peserta akan mencari FLAG di dalam sebuah text berupa
+Ciphertext yang perlu ditemukan pesan rahasianya
+c. Network Packet
+Peserta akan mencari FLAG dari sebuah file capture untuk
+ditemukan pesan rahasianya
+d. Web Exploitation
+Peserta akan mencari FLAG dalam suatu website yang berisikan
+kode Base64
+e. Binary Exploitation
+Peserta akan mencari FLAG dalam sebuah Binary yang telah disediakan
