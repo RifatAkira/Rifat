@@ -17,7 +17,7 @@ password
 6. Pasang dan aktifkan fail2ban untuk SSH
 7. Aktifkan auditd dan pastikan log audit berjalan
 
-b. Keamanan Komunikasi E-mail
+b. Keamanan Komunikasi E-mail (Beres)
 1. Install GnuPG (GPG):
 2. Pastikan sistem memiliki gpg versi terbaru.
 3. Buat sepasang key PGP:
