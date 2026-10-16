@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rifat gosling — Portofolio Cybersecurity</title>
+<meta name="description" content="Rifat gosling">
+
+<!-- ====================================================
+     FONT: JetBrains Mono (kesan teknis) + Poppins (judul elegan)
+==================================================== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   1. RESET & VARIABEL WARNA (DESIGN TOKENS)
+   ============================================================ */
+:root{
+  /* -- Latar & permukaan -- */
+  --bg-base: #0a0a0c;         /* latar utama, hitam pekat */
+  --bg-panel: #121214;        /* panel/section sedikit lebih terang */
+  --bg-glass: rgba(20, 22, 24, 0.55); /* kartu glassmorphism */
+  --border-line: rgba(255,255,255,0.08);
+
+  /* -- Aksen -- */
+  --accent-cyan: #00e5ff;      /* aksen utama: cyan neon (teknis) */
+  --accent-gold: #d4af37;      /* aksen sekunder: emas (kesan mewah) */
+  --accent-cyan-dim: rgba(0, 229, 255, 0.15);
+  --accent-gold-dim: rgba(212, 175, 55, 0.15);
+
+  /* -- Teks -- */
+  --text-primary: #e9e9ee;
+  --text-muted: #83838f;
+  --text-faint: #55555f;
+
+  /* -- Tipografi -- */
+  --font-display: 'Poppins', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* -- Lain-lain -- */
+  --radius-card: 4px;
+  --transition-smooth: 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+  background:var(--bg-base);
+  color:var(--text-primary);
+  font-family:var(--font-mono);
+  font-size:16px;
+  line-height:1.7;
+  overflow-x:hidden;
+  cursor:none; /* cursor bawaan disembunyikan, diganti custom cursor */
+}
+
+@media (max-width: 768px){
+  body{ cursor:auto; } /* di mobile, custom cursor tidak relevan (tidak ada mouse) */
+}
+
+h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; letter-spacing:-0.01em; }
+
+a{ color:inherit; text-decoration:none; }
+
+img{ max-width:100%; display:block; }
+
+::selection{ background:var(--accent-cyan-dim); color:var(--accent-cyan); }
+
+/* Scrollbar tipis bergaya teknis */
+::-webkit-scrollbar{ width:8px; }
+::-webkit-scrollbar-track{ background:var(--bg-base); }
+::-webkit-scrollbar-thumb{ background:var(--border-line); border-radius:4px; }
+::-webkit-scrollbar-thumb:hover{ background:var(--accent-cyan-dim); }
+
+/* Menghormati preferensi pengguna yang mengurangi animasi */
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important; }
+}
+
+.container{
+  max-width:960px;
+  margin:0 auto;
+  padding:0 24px;
+}
+
+section{
+  position:relative;
+  padding:120px 0;
+  border-bottom:1px solid var(--border-line);
+}
+
+/* Label kecil bergaya teknis di atas tiap section (bukan ALL CAPS, huruf kecil + nomor urut section sebagai penanda posisi, relevan karena halaman ini memang berupa urutan section) */
+.section-tag{
+  font-family:var(--font-mono);
+  font-size:13px;
+  color:var(--accent-cyan);
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-tag .dot{
+  width:6px; height:6px; border-radius:50%;
+  background:var(--accent-cyan);
+  box-shadow:0 0 8px var(--accent-cyan);
+}
+
+.section-title{
+  font-size:clamp(28px, 4vw, 42px);
+  margin-bottom:48px;
+  max-width:640px;
+}
+
+/* ============================================================
+   2. CUSTOM CURSOR — ikon topeng hacker
+   Menggantikan cursor bawaan dengan ikon topeng bergaya "anonymous
+   hacker" (SVG orisinal, bukan aset berlisensi), mengikuti mouse
+   dengan sedikit lag, dan menyala/membesar saat hover elemen aktif.
+   ============================================================ */
+.cursor-mask{
+  position:fixed;
+  top:0; left:0;
+  width:36px; height:40px;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-65%) rotate(0deg);
+  will-change:transform;
+  filter:drop-shadow(0 0 4px rgba(0,229,255,0.55));
+  transition:filter 0.25s var(--transition-smooth);
+}
+.cursor-mask svg{
+  width:100%; height:100%;
+  display:block;
+}
+/* Wajah topeng: putih gading dengan garis tepi cyan menyala (kesan "hacker") */
+.cursor-mask .mask-face{
+  fill:rgba(233,233,238,0.92);
+  stroke:var(--accent-cyan);
+  stroke-width:1.3;
+  transition:stroke 0.25s var(--transition-smooth), fill 0.25s var(--transition-smooth);
+}
+.cursor-mask .mask-eye{
+  fill:#0a0a0c;
+  transition:fill 0.25s var(--transition-smooth);
+}
+/* Alis, kumis & janggut: garis tegas gelap agar ekspresi topeng terlihat jelas */
+.cursor-mask .mask-brow{
+  fill:none;
+  stroke:#0a0a0c;
+  stroke-width:1.6;
+  stroke-linecap:round;
+  transition:stroke 0.25s var(--transition-smooth);
+}
+/* Saat hover elemen interaktif: topeng membesar & berubah ke warna emas (kesan "mode aktif") */
+.cursor-mask.is-active{
+  transform:translate(-50%,-65%) scale(1.3) rotate(-6deg);
+  filter:drop-shadow(0 0 10px rgba(212,175,55,0.65));
+}
+.cursor-mask.is-active .mask-face{
+  stroke:var(--accent-gold);
+}
+.cursor-mask.is-active .mask-brow{
+  stroke:var(--accent-gold);
+}
+
+/* ============================================================
+   3. BACKGROUND CANVAS (efek partikel jaringan halus)
+   ============================================================ */
+#network-bg{
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  z-index:0;
+  opacity:0.5;
+}
+
+/* ============================================================
+   4. NAVIGASI
+   ============================================================ */
+.navbar{
+  position:fixed;
+  top:0; left:0; right:0;
+  z-index:100;
+  background:rgba(10,10,12,0.7);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border-line);
+}
+.nav-inner{
+  max-width:960px;
+  margin:0 auto;
+  padding:18px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.nav-logo{
+  font-family:var(--font-mono);
+  font-weight:600;
+  font-size:15px;
+  color:var(--text-primary);
+}
+.nav-logo span{ color:var(--accent-cyan); }
+
+.nav-links{
+  display:flex;
+  gap:32px;
+  list-style:none;
+  font-size:14px;
+}
+.nav-links a{
+  color:var(--text-muted);
+  position:relative;
+  transition:color var(--transition-smooth);
+}
+.nav-links a::after{
+  content:'';
+  position:absolute;
+  left:0; bottom:-4px;
+  width:0; height:1px;
+  background:var(--accent-cyan);
+  transition:width var(--transition-smooth);
+}
+.nav-links a:hover{ color:var(--text-primary); }
+.nav-links a:hover::after{ width:100%; }
+
+.nav-toggle{
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  background:none;
+  border:none;
+  cursor:pointer;
+}
+.nav-toggle span{
+  width:22px; height:2px;
+  background:var(--text-primary);
+}
+
+@media (max-width: 768px){
+  .nav-links{
+    position:fixed;
+    top:57px; right:0;
+    height:calc(100vh - 57px);
+    width:220px;
+    background:var(--bg-panel);
+    flex-direction:column;
+    padding:32px 24px;
+    gap:24px;
+    transform:translateX(100%);
+    transition:transform var(--transition-smooth);
+    border-left:1px solid var(--border-line);
+  }
+  .nav-links.is-open{ transform:translateX(0); }
+  .nav-toggle{ display:flex; }
+}
+
+/* ============================================================
+   5. HERO SECTION
+   ============================================================ */
+.hero{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding-top:57px;
+  border-bottom:1px solid var(--border-line);
+}
+.hero-inner{
+  max-width:960px;
+  margin:0 auto;
+  padding:0 24px;
+  position:relative;
+  z-index:1;
+}
+.hero-eyebrow{
+  font-family:var(--font-mono);
+  font-size:14px;
+  color:var(--accent-gold);
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.hero-eyebrow::before{
+  content:'';
+  width:24px; height:1px;
+  background:var(--accent-gold);
+}
+.hero-name{
+  font-size:clamp(40px, 7vw, 76px);
+  line-height:1.05;
+  margin-bottom:20px;
+}
+.hero-name .accent{ color:var(--accent-cyan); }
+
+.hero-tagline{
+  font-family:var(--font-mono);
+  font-size:clamp(15px, 2vw, 18px);
+  color:var(--text-muted);
+  max-width:560px;
+  margin-bottom:44px;
+}
+.hero-tagline .cursor-blink{
+  display:inline-block;
+  width:9px; height:18px;
+  background:var(--accent-cyan);
+  margin-left:4px;
+  vertical-align:middle;
+  animation:blink 1s step-end infinite;
+}
+@keyframes blink{ 50%{ opacity:0; } }
+
+.hero-actions{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.btn{
+  font-family:var(--font-mono);
+  font-size:14px;
+  padding:14px 28px;
+  border-radius:var(--radius-card);
+  border:1px solid var(--border-line);
+  transition:all var(--transition-smooth);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+.btn-primary{
+  background:var(--accent-cyan);
+  color:#00181c;
+  border-color:var(--accent-cyan);
+  font-weight:600;
+}
+.btn-primary:hover{
+  box-shadow:0 0 24px rgba(0,229,255,0.45);
+  transform:translateY(-2px);
+}
+.btn-ghost{
+  color:var(--text-primary);
+  border-color:var(--border-line);
+}
+.btn-ghost:hover{
+  border-color:var(--accent-gold);
+  color:var(--accent-gold);
+  box-shadow:0 0 20px rgba(212,175,55,0.2);
+}
+
+/* ============================================================
+   6. UTILITAS ANIMASI SCROLL (fade + slide-up)
+   ============================================================ */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.7s var(--transition-smooth), transform 0.7s var(--transition-smooth);
+}
+.reveal.is-visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ============================================================
+   7. ABOUT SECTION
+   ============================================================ */
+.about-grid{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:56px;
+  align-items:start;
+}
+.about-photo{
+  width:220px; height:220px;
+  border-radius:var(--radius-card);
+  background:var(--bg-panel);
+  border:1px solid var(--border-line);
+  overflow:hidden;
+  position:relative;
+}
+.about-photo img{ width:100%; height:100%; object-fit:cover; }
+.about-photo .placeholder-text{
+  position:absolute; inset:0;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; font-size:12px; color:var(--text-faint); padding:16px;
+}
+.about-text p{
+  color:var(--text-muted);
+  margin-bottom:18px;
+  max-width:60ch;
+}
+.about-text strong{ color:var(--text-primary); font-weight:500; }
+.about-text .highlight{ color:var(--accent-cyan); }
+
+@media (max-width: 700px){
+  .about-grid{ grid-template-columns:1fr; }
+  .about-photo{ width:140px; height:140px; }
+}
+
+/* ============================================================
+   8. SKILLS SECTION
+   ============================================================ */
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:20px;
+}
+@media (max-width: 700px){
+  .skills-grid{ grid-template-columns:1fr; }
+}
+
+.skill-card{
+  background:var(--bg-glass);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--border-line);
+  border-left:2px solid var(--accent-cyan);
+  border-radius:var(--radius-card);
+  padding:24px;
+  transition:transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.skill-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 32px rgba(0,0,0,0.4);
+}
+.skill-card-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  margin-bottom:6px;
+}
+.skill-name{
+  font-family:var(--font-display);
+  font-size:17px;
+  font-weight:500;
+}
+.skill-level{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--accent-gold);
+}
+.skill-desc{
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:16px;
+}
+.progress-track{
+  height:5px;
+  background:rgba(255,255,255,0.06);
+  border-radius:3px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  width:0%; /* diisi via JS + data-progress saat elemen terlihat */
+  background:linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
+  border-radius:3px;
+  transition:width 1.2s var(--transition-smooth);
+}
+
+.tools-row{
+  margin-top:40px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.tool-chip{
+  font-family:var(--font-mono);
+  font-size:13px;
+  padding:8px 14px;
+  border:1px solid var(--border-line);
+  border-radius:20px;
+  color:var(--text-muted);
+  transition:all var(--transition-smooth);
+}
+.tool-chip:hover{
+  color:var(--accent-cyan);
+  border-color:var(--accent-cyan);
+  box-shadow:0 0 14px rgba(0,229,255,0.25);
+}
+
+/* ============================================================
+   9. TIMELINE / LEARNING JOURNEY
+   ============================================================ */
+.timeline{
+  position:relative;
+  padding-left:32px;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:5px; top:6px; bottom:6px;
+  width:1px;
+  background:linear-gradient(to bottom, var(--accent-cyan), var(--border-line));
+}
+.timeline-item{
+  position:relative;
+  padding-bottom:44px;
+}
+.timeline-item:last-child{ padding-bottom:0; }
+.timeline-item::before{
+  content:'';
+  position:absolute;
+  left:-32px; top:4px;
+  width:11px; height:11px;
+  border-radius:50%;
+  background:var(--bg-base);
+  border:2px solid var(--accent-cyan);
+}
+.timeline-item.is-current::before{
+  background:var(--accent-cyan);
+  box-shadow:0 0 12px var(--accent-cyan);
+}
+.timeline-period{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--accent-gold);
+  margin-bottom:6px;
+}
+.timeline-title{
+  font-family:var(--font-display);
+  font-size:18px;
+  font-weight:500;
+  margin-bottom:8px;
+}
+.timeline-desc{
+  font-size:14px;
+  color:var(--text-muted);
+  max-width:60ch;
+}
+
+/* ============================================================
+   10. PROJECTS / LABS
+   ============================================================ */
+.projects-grid{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:20px;
+}
+@media (max-width: 900px){
+  .projects-grid{ grid-template-columns:repeat(2, 1fr); }
+}
+@media (max-width: 600px){
+  .projects-grid{ grid-template-columns:1fr; }
+}
+
+.project-card{
+  background:var(--bg-panel);
+  border:1px solid var(--border-line);
+  border-radius:var(--radius-card);
+  overflow:hidden;
+  transition:transform var(--transition-smooth), border-color var(--transition-smooth);
+}
+.project-card:hover{
+  transform:translateY(-4px);
+  border-color:var(--accent-cyan);
+}
+.project-thumb{
+  height:140px;
+  background:
+    repeating-linear-gradient(135deg, rgba(0,229,255,0.05) 0 2px, transparent 2px 10px),
+    var(--bg-base);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:var(--text-faint);
+  font-size:12px;
+  border-bottom:1px solid var(--border-line);
+}
+.project-body{ padding:20px; }
+.project-status{
+  font-family:var(--font-mono);
+  font-size:11px;
+  color:var(--accent-gold);
+  margin-bottom:8px;
+}
+.project-title{
+  font-family:var(--font-display);
+  font-size:16px;
+  font-weight:500;
+  margin-bottom:8px;
+}
+.project-desc{
+  font-size:13px;
+  color:var(--text-muted);
+  margin-bottom:16px;
+}
+.project-tags{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  margin-bottom:16px;
+}
+.project-tags span{
+  font-size:11px;
+  padding:4px 8px;
+  background:var(--accent-cyan-dim);
+  color:var(--accent-cyan);
+  border-radius:3px;
+}
+.project-link{
+  font-size:13px;
+  color:var(--text-primary);
+  border-bottom:1px solid var(--border-line);
+  padding-bottom:2px;
+  transition:border-color var(--transition-smooth), color var(--transition-smooth);
+}
+.project-link:hover{
+  color:var(--accent-cyan);
+  border-color:var(--accent-cyan);
+}
+
+/* ============================================================
+   11. CONTACT SECTION
+   ============================================================ */
+.contact-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:56px;
+}
+@media (max-width: 800px){
+  .contact-grid{ grid-template-columns:1fr; gap:40px; }
+}
+
+.contact-info p{
+  color:var(--text-muted);
+  max-width:48ch;
+  margin-bottom:28px;
+}
+.social-list{
+  list-style:none;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.social-list a{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-size:15px;
+  color:var(--text-primary);
+  width:fit-content;
+  transition:color var(--transition-smooth), transform var(--transition-smooth);
+}
+.social-list a:hover{ color:var(--accent-cyan); transform:translateX(4px); }
+.social-list svg{ width:18px; height:18px; flex-shrink:0; }
+
+.contact-form{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.form-group{ display:flex; flex-direction:column; gap:8px; }
+.form-group label{ font-size:12px; color:var(--text-muted); }
+.form-group input, .form-group textarea{
+  background:var(--bg-glass);
+  border:1px solid var(--border-line);
+  border-radius:var(--radius-card);
+  padding:12px 14px;
+  color:var(--text-primary);
+  font-family:var(--font-mono);
+  font-size:14px;
+  resize:vertical;
+  transition:border-color var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+.form-group input:focus, .form-group textarea:focus{
+  outline:none;
+  border-color:var(--accent-cyan);
+  box-shadow:0 0 0 3px rgba(0,229,255,0.12);
+}
+.form-note{
+  font-size:12px;
+  color:var(--text-faint);
+}
+
+footer{
+  text-align:center;
+  padding:32px 24px;
+  font-size:12px;
+  color:var(--text-faint);
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     CUSTOM CURSOR — ikon topeng hacker (SVG orisinal, digerakkan JS)
+============================================================ -->
+<div class="cursor-mask" id="cursorMask">
+  <svg viewBox="0 0 40 44" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bentuk dasar topeng: dahi lebar, pipi membulat, dagu meruncing ke bawah -->
+    <path class="mask-face" d="M20 2
+      C 28 2 34 7.5 34 16
+      C 34 23.5 30.5 29 26 33.5
+      C 23.8 35.7 22 38.5 20 41.5
+      C 18 38.5 16.2 35.7 14 33.5
+      C 9.5 29 6 23.5 6 16
+      C 6 7.5 12 2 20 2 Z"/>
+    <!-- Alis melengkung tegas, khas ekspresi menyeringai -->
+    <path class="mask-brow" d="M8.5 14.5 Q13.5 10.5 18.5 13.5" />
+    <path class="mask-brow" d="M31.5 14.5 Q26.5 10.5 21.5 13.5" />
+    <!-- Sepasang mata menyipit -->
+    <path class="mask-eye" d="M9.5 17 Q14 15 18.5 17.2 Q14 19.4 9.5 17 Z"/>
+    <path class="mask-eye" d="M30.5 17 Q26 15 21.5 17.2 Q26 19.4 30.5 17 Z"/>
+    <!-- Kumis melengkung ke atas di kedua ujung -->
+    <path class="mask-brow" d="M7.5 25 Q20 21.5 32.5 25 Q27 24 24 26.5 M7.5 25 Q13 24 16 26.5" />
+    <!-- Janggut runcing di dagu -->
+    <path class="mask-brow" d="M20 27 L20 38" />
+  </svg>
+</div>
+
+<!-- ============================================================
+     CANVAS BACKGROUND — efek partikel jaringan halus
+============================================================ -->
+<canvas id="network-bg"></canvas>
+
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav class="navbar">
+  <div class="nav-inner">
+    <div class="nav-logo">Rifat gosling<span>&lt;RIFT&gt;</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home">home</a></li>
+      <li><a href="#about">about</a></li>
+      <li><a href="#skills">skills</a></li>
+      <li><a href="#journey">journey</a></li>
+      <li><a href="#labs">labs</a></li>
+      <li><a href="#contact">contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Buka menu navigasi">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     1. HERO SECTION
+============================================================ -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-eyebrow reveal">status: sedang belajar & terus berkembang</div>
+    <h1 class="hero-name reveal">
+      <!-- GANTI DENGAN nama lengkap Anda -->
+       <span class="accent">Rifat gosling</span>
+    </h1>
+    <p class="hero-tagline reveal">
+      <!-- GANTI DENGAN tagline singkat Anda -->
+      Cybersecurity Enthusiast · Sedang belajar Network &amp; System Security
+      <span class="cursor-blink"></span>
+    </p>
+    <div class="hero-actions reveal">
+      <a href="#contact" class="btn btn-primary">Hubungi Saya</a>
+      <!-- GANTI DENGAN link CV Anda (misal Google Drive / file PDF) -->
+      <a href="#" target="_blank" class="btn btn-ghost">Unduh CV</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     2. ABOUT ME
+============================================================ -->
+<section id="about">
+  <div class="container">
+    <div class="section-tag reveal"><span class="dot"></span>tentang saya</div>
+    <h2 class="section-title reveal">Mengenal lebih dekat</h2>
+
+    <div class="about-grid">
+      <div class="about-photo reveal">
+        <!-- GANTI DENGAN foto Anda: hapus <div class="placeholder-text"> dan gunakan <img src="foto-anda.jpg" alt="Foto Anda"> -->
+        <div class="placeholder-text">// GANTI DENGAN foto Anda di sini</div>
+      </div>
+
+      <div class="about-text reveal">
+        <p>
+          <!-- GANTI DENGAN cerita singkat tentang diri Anda -->
+          Halo, saya <strong>Rifat</strong>, seseorang yang tertarik pada dunia
+          <span class="highlight">keamanan siber</span> sejak pertama kali mencoba memahami
+          bagaimana sebuah sistem bisa ditembus — dan bagaimana cara melindunginya.
+        </p>
+        <p>
+          Ketertarikan ini bermula dari rasa penasaran terhadap cara kerja jaringan dan sistem
+          operasi Linux. Semakin dalam saya mempelajarinya, semakin saya sadar bahwa keamanan
+          bukan sekadar soal alat, tapi cara berpikir: selalu bertanya
+          "apa yang bisa disalahgunakan di sini?"
+        </p>
+        <p>
+          Saat ini saya sedang membangun fondasi di bidang <strong>system hardening</strong>,
+          <strong>network security</strong>, dan <strong>intrusion detection</strong>, melalui
+          lab simulasi dan praktik langsung. Saya percaya proses belajar yang jujur — termasuk
+          mengakui masih di tahap pemula — adalah bagian dari perjalanan menjadi profesional
+          yang kompeten.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     3. SKILLS / KEAHLIAN
+============================================================ -->
+<section id="skills">
+  <div class="container">
+    <div class="section-tag reveal"><span class="dot"></span>keahlian</div>
+    <h2 class="section-title reveal">Apa yang sedang saya kuasai</h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <div class="skill-card-head">
+          <span class="skill-name">System &amp; OS Hardening (Linux)</span>
+          <span class="skill-level">Menengah</span>
+        </div>
+        <p class="skill-desc">Konfigurasi keamanan dasar Linux, manajemen user &amp; permission, hardening layanan.</p>
+        <div class="progress-track"><div class="progress-fill" data-progress="55"></div></div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-head">
+          <span class="skill-name">Network Security</span>
+          <span class="skill-level">Menengah</span>
+        </div>
+        <p class="skill-desc">Firewall dasar, TCP Wrappers, deteksi aktivitas port scanning.</p>
+        <div class="progress-track"><div class="progress-fill" data-progress="40"></div></div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-head">
+          <span class="skill-name">Intrusion Detection System</span>
+          <span class="skill-level">Menengah</span>
+        </div>
+        <p class="skill-desc">Konfigurasi dasar Snort/IDS, membaca alert, dan analisis log sederhana.</p>
+        <div class="progress-track"><div class="progress-fill" data-progress="35"></div></div>
+      </div>
+
+      <div class="skill-card reveal">
+        <div class="skill-card-head">
+          <span class="skill-name">Dasar Kriptografi</span>
+          <span class="skill-level">Pemula</span>
+        </div>
+        <p class="skill-desc">Konsep enkripsi simetris/asimetris, hashing, dan penerapan dasarnya.</p>
+        <div class="progress-track"><div class="progress-fill" data-progress="30"></div></div>
+      </div>
+
+    </div>
+
+    <!-- GANTI DENGAN daftar tools yang benar-benar Anda kuasai -->
+    <div class="tools-row reveal">
+      <span class="tool-chip">Nmap</span>
+      <span class="tool-chip">Wireshark</span>
+      <span class="tool-chip">fail2ban</span>
+      <span class="tool-chip">Snort</span>
+      <span class="tool-chip">iptables</span>
+      <span class="tool-chip">tcpdump</span>
+      <span class="tool-chip">VirtualBox</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4. LEARNING JOURNEY / TIMELINE
+============================================================ -->
+<section id="journey">
+  <div class="container">
+    <div class="section-tag reveal"><span class="dot"></span>perjalanan belajar</div>
+    <h2 class="section-title reveal">Tahapan yang sudah dan sedang saya lalui</h2>
+
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-period"><!-- GANTI DENGAN periode waktu -->2025</div>
+        <div class="timeline-title">Mulai dari dasar Linux</div>
+        <div class="timeline-desc">Belajar command line, manajemen file, permission, dan dasar administrasi sistem Linux.</div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-period">2025</div>
+        <div class="timeline-title">Jaringan komputer dasar</div>
+        <div class="timeline-desc">Memahami konsep TCP/IP, subnetting, dan cara kerja firewall sederhana.</div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-period">2026</div>
+        <div class="timeline-title">Eksplorasi keamanan sistem</div>
+        <div class="timeline-desc">Mulai mempraktikkan hardening server, konfigurasi fail2ban dan TCP Wrappers.</div>
+      </div>
+
+      <div class="timeline-item is-current reveal">
+        <div class="timeline-period">2026 — sekarang</div>
+        <div class="timeline-title">Simulasi serangan &amp; deteksi (IDS)</div>
+        <div class="timeline-desc">Membangun lab simulasi untuk memahami pola serangan dan cara mendeteksinya dengan Snort/IDS.</div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-period"><!-- GANTI DENGAN target berikutnya --></div>
+        <div class="timeline-title">Target berikutnya</div>
+        <div class="timeline-desc"><!-- GANTI DENGAN rencana belajar Anda selanjutnya, misal: sertifikasi, CTF, dsb. --></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5. PROJECTS / LABS
+============================================================ -->
+<section id="labs">
+  <div class="container">
+    <div class="section-tag reveal"><span class="dot"></span>lab &amp; proyek</div>
+    <h2 class="section-title reveal">Simulasi lab yang pernah saya kerjakan</h2>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-thumb"><!-- GANTI DENGAN screenshot lab Anda --> preview lab</div>
+        <div class="project-body">
+          <div class="project-status">selesai</div>
+          <div class="project-title">Deteksi Port Scanning dengan Snort</div>
+          <p class="project-desc">Simulasi serangan port scanning di lingkungan virtual, kemudian dianalisis melalui alert Snort.</p>
+          <div class="project-tags"><span>Snort</span><span>Nmap</span><span>VirtualBox</span></div>
+          <!-- GANTI DENGAN link repo/dokumentasi -->
+          <a href="#" class="project-link">Lihat detail</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">preview lab</div>
+        <div class="project-body">
+          <div class="project-status">selesai</div>
+          <div class="project-title">Hardening Server Linux Dasar</div>
+          <p class="project-desc">Menerapkan konfigurasi keamanan dasar: disable root login, firewall, dan fail2ban pada server uji.</p>
+          <div class="project-tags"><span>Linux</span><span>fail2ban</span><span>SSH</span></div>
+          <a href="#" class="project-link">Lihat detail</a>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-thumb">preview lab</div>
+        <div class="project-body">
+          <div class="project-status">sedang berjalan</div>
+          <div class="project-title">Analisis Trafik dengan Wireshark</div>
+          <p class="project-desc">Menangkap dan menganalisis paket jaringan untuk memahami pola trafik normal vs mencurigakan.</p>
+          <div class="project-tags"><span>Wireshark</span><span>TCP/IP</span></div>
+          <a href="#" class="project-link">Lihat detail</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     6. CONTACT
+============================================================ -->
+<section id="contact" style="border-bottom:none;">
+  <div class="container">
+    <div class="section-tag reveal"><span class="dot"></span>kontak</div>
+    <h2 class="section-title reveal">Mari terhubung</h2>
+
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p>Terbuka untuk diskusi seputar cybersecurity, kolaborasi lab, atau sekadar bertukar pengalaman belajar. Silakan hubungi saya melalui salah satu kanal berikut.</p>
+
+        <ul class="social-list">
+          <li>
+            <a href="#" target="_blank"> <!-- GANTI DENGAN link GitHub Anda -->
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.5 0 12.3c0 5.4 3.44 10 8.2 11.6.6.1.82-.27.82-.6v-2.1c-3.34.75-4.04-1.66-4.04-1.66-.55-1.44-1.34-1.82-1.34-1.82-1.1-.77.08-.76.08-.76 1.2.09 1.84 1.27 1.84 1.27 1.08 1.9 2.83 1.35 3.52 1.03.1-.8.42-1.35.76-1.66-2.67-.31-5.47-1.38-5.47-6.15 0-1.36.47-2.47 1.24-3.34-.12-.31-.54-1.57.12-3.28 0 0 1-.33 3.3 1.28a11 11 0 0 1 6 0c2.28-1.6 3.28-1.28 3.28-1.28.66 1.7.24 2.97.12 3.28.77.87 1.24 1.98 1.24 3.34 0 4.78-2.8 5.83-5.48 6.14.43.38.82 1.13.82 2.28v3.38c0 .33.22.72.83.6C20.57 22.28 24 17.7 24 12.3 24 5.5 18.63 0 12 0Z"/></svg>
+              github.com/GANTI-username
+            </a>
+          </li>
+          <li>
+            <a href="#" target="_blank"> <!-- GANTI DENGAN link LinkedIn Anda -->
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43a2.07 2.07 0 1 1 0-4.13 2.07 2.07 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+              linkedin.com/in/GANTI-username
+            </a>
+          </li>
+          <li>
+            <a href="mailto:GANTI@email.com"> <!-- GANTI DENGAN alamat email Anda -->
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13Zm2.2.5 7.8 6 7.8-6H4.2ZM20 7.3l-8 6.15L4 7.3v11.2c0 .28.22.5.5.5h15c.28 0 .5-.22.5-.5V7.3Z"/></svg>
+              GANTI@email.com
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Catatan: form ini murni tampilan (front-end saja).
+           Agar form benar-benar mengirim pesan, hubungkan action-nya
+           ke layanan seperti Formspree, EmailJS, atau backend Anda sendiri. -->
+      <form class="contact-form reveal" id="contactForm">
+        <div class="form-group">
+          <label for="name">Nama</label>
+          <input type="text" id="name" name="name" placeholder="Nama Anda" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="email@anda.com" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Pesan</label>
+          <textarea id="message" name="message" rows="5" placeholder="Tulis pesan Anda di sini..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+        <p class="form-note">// GANTI: hubungkan form ini ke Formspree/EmailJS agar bisa mengirim pesan sungguhan</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <!-- GANTI DENGAN nama Anda dan tahun berjalan -->
+  © 2026 Rifat gosling. Dibangun dengan semangat belajar keamanan siber.
+</footer>
+
+<script>
+/* ============================================================
+   A. CUSTOM CURSOR — ikon topeng hacker
+   Menggerakkan ikon topeng mengikuti posisi mouse dengan sedikit
+   "lag" agar terasa halus, lalu membesar & menyala emas saat
+   hover di atas elemen interaktif (tombol, link, kartu, dsb).
+============================================================ */
+(function(){
+  const mask = document.getElementById('cursorMask');
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    // perangkat sentuh (mobile/tablet): sembunyikan custom cursor
+    mask.style.display = 'none';
+    return;
+  }
+
+  let maskX = 0, maskY = 0, mouseX = 0, mouseY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+  });
+
+  // Ikon topeng mengikuti mouse dengan lag halus (bukan menempel kaku)
+  function animateMask(){
+    maskX += (mouseX - maskX) * 0.18;
+    maskY += (mouseY - maskY) * 0.18;
+    mask.style.left = maskX + 'px';
+    mask.style.top = maskY + 'px';
+    requestAnimationFrame(animateMask);
+  }
+  animateMask();
+
+  // Membesarkan & mengganti warna topeng saat hover elemen interaktif
+  const interactiveEls = document.querySelectorAll('a, button, input, textarea, .skill-card, .project-card');
+  interactiveEls.forEach(el => {
+    el.addEventListener('mouseenter', () => mask.classList.add('is-active'));
+    el.addEventListener('mouseleave', () => mask.classList.remove('is-active'));
+  });
+})();
+
+/* ============================================================
+   B. NETWORK PARTICLE BACKGROUND
+   Menggambar titik-titik yang saling terhubung dengan garis tipis
+   selama jaraknya cukup dekat — kesan "jaringan" yang halus & premium.
+============================================================ */
+(function(){
+  const canvas = document.getElementById('network-bg');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+
+  const PARTICLE_COUNT_DESKTOP = 60;
+  const PARTICLE_COUNT_MOBILE = 28;
+  const LINK_DISTANCE = 130;
+
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function initParticles(){
+    const count = window.innerWidth < 768 ? PARTICLE_COUNT_MOBILE : PARTICLE_COUNT_DESKTOP;
+    particles = Array.from({length: count}, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3
+    }));
+  }
+  initParticles();
+
+  function tick(){
+    ctx.clearRect(0, 0, w, h);
+
+    // Update posisi & gambar titik
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0, 229, 255, 0.5)';
+      ctx.fill();
+    });
+
+    // Gambar garis penghubung antar titik yang berdekatan
+    for (let i = 0; i < particles.length; i++){
+      for (let j = i + 1; j < particles.length; j++){
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < LINK_DISTANCE){
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(0, 229, 255, ${0.12 * (1 - dist / LINK_DISTANCE)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+/* ============================================================
+   C. SCROLL REVEAL (fade-in + slide-up)
+   Menggunakan IntersectionObserver agar elemen ".reveal" muncul
+   dengan animasi halus saat pertama kali masuk viewport.
+============================================================ */
+(function(){
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => observer.observe(el));
+})();
+
+/* ============================================================
+   D. PROGRESS BAR SKILLS
+   Mengisi lebar progress bar sesuai data-progress HANYA saat
+   kartu skill terlihat di layar (biar animasinya berasa).
+============================================================ */
+(function(){
+  const bars = document.querySelectorAll('.progress-fill');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const bar = entry.target;
+        bar.style.width = bar.dataset.progress + '%';
+        observer.unobserve(bar);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  bars.forEach(bar => observer.observe(bar));
+})();
+
+/* ============================================================
+   E. NAVBAR MOBILE TOGGLE
+============================================================ */
+(function(){
+  const toggle = document.getElementById('navToggle');
+  const links = document.getElementById('navLinks');
+
+  toggle.addEventListener('click', () => {
+    links.classList.toggle('is-open');
+  });
+
+  // Tutup menu mobile setelah salah satu link diklik
+  links.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => links.classList.remove('is-open'));
+  });
+})();
+
+/* ============================================================
+   F. PARALLAX RINGAN PADA HERO
+   Teks hero bergeser sedikit mengikuti posisi mouse, memberi
+   kedalaman tanpa berlebihan.
+============================================================ */
+(function(){
+  const heroInner = document.querySelector('.hero-inner');
+  if (window.matchMedia('(pointer: coarse)').matches) return; // skip di mobile
+
+  window.addEventListener('mousemove', (e) => {
+    const x = (e.clientX / window.innerWidth - 0.5) * 12; // maksimal geser 12px
+    const y = (e.clientY / window.innerHeight - 0.5) * 12;
+    heroInner.style.transform = `translate(${x}px, ${y}px)`;
+  });
+})();
+
+/* ============================================================
+   G. FORM KONTAK (placeholder)
+   Saat ini hanya menampilkan notifikasi sederhana.
+   // GANTI DENGAN integrasi Formspree/EmailJS/backend Anda sendiri
+   agar pesan benar-benar terkirim ke email Anda.
+============================================================ */
+(function(){
+  const form = document.getElementById('contactForm');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    alert('Terima kasih! (Ini baru tampilan — hubungkan form ke Formspree/EmailJS agar pesan benar-benar terkirim.)');
+    form.reset();
+  });
+})();
+</script>
+
+</body>
+</html>
