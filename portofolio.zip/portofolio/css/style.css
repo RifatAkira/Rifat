@@ -1,0 +1,168 @@
+/* STYLE.CSS
+   1 Variabel · 2 Dasar · 3 Sidebar · 4 Hero · 5 Section · 6 Skills
+   7 Timeline · 8 Hobi · 9 Blog · 10 Kontak · 11 Lightbox · 12 Responsif */
+
+/* 1. VARIABEL (ubah tema di sini) */
+:root{
+  --bg:#0b0b0d;--surface:#141417;--text:#e8e6e1;--muted:#8a8a90;--accent:#c9a96e;
+  --line:rgba(232,230,225,.12);--err:#d98b7b;
+  --serif:"Playfair Display",Georgia,serif;
+  --sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sw:280px;--bar:60px;--pad:clamp(1.5rem,6vw,6rem);--gap:clamp(5rem,12vh,8rem);
+  --ease:cubic-bezier(.22,.61,.36,1);--t:.4s;
+}
+
+/* 2. DASAR */
+*,*::before,*::after{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.75 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+ul,ol{list-style:none;padding:0}
+button{font:inherit;color:inherit}
+::selection{background:var(--accent);color:var(--bg)}
+:focus-visible{outline:1px solid var(--accent);outline-offset:4px}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;z-index:200;padding:.5rem 1rem;background:var(--surface)}
+/* grain halus */
+body::before{content:"";position:fixed;inset:0;z-index:60;pointer-events:none;opacity:.08;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+h1,h2,h3{font-family:var(--serif);font-weight:500;line-height:1.15}
+h2{font-size:clamp(2rem,4.5vw,3.3rem);margin-bottom:2.5rem}
+h3{font-size:1.25rem}
+svg.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.btn{display:inline-block;padding:.9rem 2rem;border:1px solid var(--text);background:none;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;
+  transition:background var(--t) var(--ease),color var(--t) var(--ease),border-color var(--t) var(--ease)}
+.btn:hover{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+/* fade-up saat scroll (kelas ditambahkan oleh main.js) */
+.up{opacity:0;transform:translateY(24px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.up.in{opacity:1;transform:none}
+
+/* 3. SIDEBAR */
+.side{position:fixed;inset:0 auto 0 0;z-index:70;width:var(--sw);display:flex;flex-direction:column;align-items:center;padding:3rem 1.5rem 2rem;overflow-y:auto;background:var(--surface);border-right:1px solid var(--line);text-align:center}
+.avatar{width:112px;height:112px;margin:0 auto;padding:4px;border:1px solid var(--line);border-radius:50%;object-fit:cover}
+.name{margin-top:1.25rem;font:500 1.4rem var(--serif)}
+.role{margin-top:.3rem;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.side nav{margin:auto 0;padding:1.5rem 0}
+.side nav a{position:relative;display:inline-block;padding:.45rem 0;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);transition:color var(--t) var(--ease)}
+.side nav a::after{content:"";position:absolute;left:0;right:0;bottom:.2rem;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform var(--t) var(--ease)}
+.side nav a:hover,.side nav a.on{color:var(--text)}
+.side nav a:hover::after,.side nav a.on::after{transform:scaleX(1)}
+.copy{font-size:.72rem;line-height:1.6;color:var(--muted)}
+.burger{display:none}
+main{margin-left:var(--sw)}
+
+/* 4. HERO */
+.hero{position:relative;display:flex;align-items:center;min-height:100svh;padding:6rem var(--pad);overflow:hidden}
+.hero-t{position:relative;z-index:1;max-width:38rem}
+.hero h1{margin-bottom:1.5rem;font-size:clamp(2.4rem,5vw,4.2rem)}
+.hero em{display:block;font-style:normal}
+.lead{max-width:28rem;margin-bottom:2.5rem;font-weight:300;color:var(--muted)}
+.hero-fig{position:absolute;inset:0 0 0 42%}
+.hero-fig img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(1) contrast(1.1)}
+.hero-fig::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--bg),transparent 55%),linear-gradient(0deg,var(--bg),transparent 25%)}
+
+/* 5. SECTION UMUM */
+.sec{padding:var(--gap) var(--pad);border-top:1px solid var(--line)}
+.sec>*{max-width:62rem}
+.cols,.ct{display:grid;grid-template-columns:3fr 2fr;gap:4rem}
+.facts div{padding:1rem 0;border-bottom:1px solid var(--line)}
+dt,label{display:block;font-size:.8rem;color:var(--muted)}
+dd{margin:0}
+.svc{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.svc article{padding:2.2rem;border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:background var(--t) var(--ease)}
+.svc article:hover{background:var(--surface)}
+.svc h3{margin-bottom:.6rem}
+.svc p,.tl p,.hb p,.post p{font-size:.92rem;color:var(--muted)}
+
+/* 6. SKILLS */
+.grp{margin-bottom:3.5rem}
+.grp h3{margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:1px solid var(--line)}
+.sk{display:grid;grid-template-columns:repeat(2,1fr);gap:1.5rem 3rem}
+.row{display:flex;justify-content:space-between;margin-bottom:.6rem;font-size:.9rem}
+.pct{color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{position:relative;height:1px;background:var(--line)}
+.bar i{position:absolute;left:0;top:0;width:0;height:1px;background:var(--text);transition:width 1.4s var(--ease)}
+.bar i::after{content:"";position:absolute;right:-2px;top:-2px;width:5px;height:5px;border-radius:50%;background:var(--accent)}
+.in .bar i{width:var(--v)}
+
+/* 7. TIMELINE */
+.tl{margin-left:.4rem;border-left:1px solid var(--line)}
+.tl li{position:relative;padding:0 0 2.5rem 2rem}
+.tl li:last-child{padding-bottom:0}
+.tl li::before{content:"";position:absolute;left:-4px;top:.5rem;width:7px;height:7px;border-radius:50%;background:var(--bg);border:1px solid var(--accent)}
+.tl time,.post time{font-size:.8rem;color:var(--muted)}
+.tl h3{margin:.2rem 0 .4rem}
+
+/* 8. HOBI */
+.hb+.hb{margin-top:5rem}
+.hb h3{font-size:1.8rem}
+.hb p{max-width:34rem;margin:.75rem 0 2rem}
+.gal{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:clamp(120px,16vw,210px);grid-auto-flow:dense;gap:.75rem}
+.gal button{padding:0;border:0;overflow:hidden;background:var(--surface);cursor:zoom-in}
+.gal button:nth-child(1){grid-row:span 2}
+.gal button:nth-child(4),.gal button:nth-child(5){grid-column:span 2}
+.gal img{width:100%;height:100%;object-fit:cover;filter:grayscale(.7);transition:transform .8s var(--ease),filter .8s var(--ease)}
+.gal button:hover img{transform:scale(1.05);filter:none}
+
+/* 9. BLOG */
+.posts{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.5rem}
+.post{padding:1.75rem;background:var(--surface);border:1px solid var(--line);transition:border-color var(--t) var(--ease),transform var(--t) var(--ease)}
+.post:hover{border-color:var(--accent);transform:translateY(-4px)}
+.post h3{margin:.6rem 0}
+
+/* 10. KONTAK */
+.f{margin-bottom:1.5rem}
+label{margin-bottom:.2rem}
+input,textarea{width:100%;padding:.7rem 0;background:none;border:0;border-bottom:1px solid var(--line);color:var(--text);font:inherit;transition:border-color var(--t),box-shadow var(--t)}
+input:focus,textarea:focus{outline:0;border-color:var(--accent);box-shadow:0 1px 0 var(--accent)}
+textarea{resize:vertical}
+.err{display:block;min-height:1.3em;margin-top:.3rem;font-size:.8rem;color:var(--err)}
+.ok{margin-top:1rem;font-size:.9rem;color:var(--accent)}
+.links a{display:flex;align-items:center;gap:.8rem;padding:.9rem 0;border-bottom:1px solid var(--line);word-break:break-all;transition:color var(--t),padding var(--t) var(--ease)}
+.links a:hover{padding-left:.5rem;color:var(--accent)}
+
+/* 11. LIGHTBOX */
+.lb{position:fixed;inset:0;z-index:100;display:grid;place-items:center;background:rgba(8,8,10,.95);opacity:0;visibility:hidden;transition:opacity var(--t) var(--ease),visibility var(--t)}
+.lb.open{opacity:1;visibility:visible}
+.lb figure{max-width:min(92vw,1100px);text-align:center}
+.lb img{max-height:78vh;margin:auto;object-fit:contain}
+.lb figcaption{margin-top:1rem;font-size:.9rem;color:var(--muted)}
+.lb button{position:absolute;display:grid;place-items:center;width:48px;height:48px;background:none;border:1px solid var(--line);border-radius:50%;cursor:pointer;transition:border-color var(--t),color var(--t)}
+.lb button:hover{border-color:var(--accent);color:var(--accent)}
+.lb-x{top:1.25rem;right:1.25rem}
+.lb-p{left:1.25rem;top:50%;margin-top:-24px}
+.lb-n{right:1.25rem;top:50%;margin-top:-24px}
+
+/* 12. RESPONSIF */
+@media(max-width:1024px){
+  html{scroll-padding-top:var(--bar)}
+  main{margin:0;padding-top:var(--bar)}
+  .side{inset:0 0 auto 0;width:auto;height:var(--bar);flex-direction:row;justify-content:space-between;padding:0 1.25rem;overflow:visible;border:0;border-bottom:1px solid var(--line);text-align:left}
+  .who{display:flex;align-items:center;gap:.75rem}
+  .avatar{width:36px;height:36px;padding:2px;margin:0}
+  .name{margin:0;font-size:1.1rem}
+  .role,.copy{display:none}
+  .burger{display:grid;gap:7px;place-content:center;width:44px;height:44px;border:0;background:none;cursor:pointer}
+  .burger span{display:block;width:24px;height:1px;background:var(--text);transition:transform var(--t) var(--ease)}
+  .side.open .burger span:first-child{transform:translateY(4px) rotate(45deg)}
+  .side.open .burger span:last-child{transform:translateY(-4px) rotate(-45deg)}
+  .side nav{position:fixed;top:var(--bar);right:0;bottom:0;width:min(80vw,320px);margin:0;padding:2rem;overflow-y:auto;background:var(--surface);border-left:1px solid var(--line);visibility:hidden;transform:translateX(100%);transition:transform var(--t) var(--ease),visibility var(--t)}
+  .side.open nav{visibility:visible;transform:none}
+  .side nav a{padding:.8rem 0;font-size:.8rem}
+  .hero{min-height:calc(100svh - var(--bar))}
+  .hero-fig{inset:0;opacity:.35}
+  .cols,.ct{grid-template-columns:1fr;gap:3rem}
+}
+@media(max-width:640px){
+  .sk,.svc{grid-template-columns:1fr}
+  .gal{grid-template-columns:repeat(2,1fr)}
+  .gal button:nth-child(5){grid-column:auto}
+}
+
+/* 13. REDUCED MOTION */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .up{opacity:1;transform:none}
+}
